@@ -31,9 +31,9 @@ def lyrics_crawler():
         for lyrics_slice in lyrics_content[0]:  # .split('\n'):
             if type(lyrics_slice) is not bs4.element.Tag:  # 略過<br>
                 if not re.search(pattern, lyrics_slice):  # 略過非歌詞部分
-                    sub_pattern = re.compile(r'[\w]+：')
+                    sub_pattern = re.compile(r'.*[\w]+：')
                     lyrics_slice = re.sub(sub_pattern, '', lyrics_slice) # 把指定對象取代掉 女：,男：,合：
-                    sub_pattern = re.compile(r'[\w]+:')
+                    sub_pattern = re.compile(r'.*[\w]+:')
                     lyrics_slice = re.sub(sub_pattern, '', lyrics_slice)
                     lyrics += lyrics_slice + ' '
         lyrics = lyrics.strip(' ')

@@ -4,7 +4,6 @@ from ckiptagger.api import main
 import mongoServer as mon
 import write_to_csv as wcsv
 
-text = '傅達仁今將執行安樂死，卻突然爆出自己20年前遭緯來體育台封殺，他不懂自己哪裡得罪到電視台。'
 
 
 def ws_tool(text):
