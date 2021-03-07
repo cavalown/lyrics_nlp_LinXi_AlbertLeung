@@ -1,5 +1,7 @@
+
 import re
 import time
+
 import bs4
 import requests
 from bs4 import BeautifulSoup
@@ -23,7 +25,7 @@ def lyrics_crawler():
         # print(lyrics_url)
         lyr_res = requests.get(lyrics_url, headers=headers, timeout=8)
         lyr_soup = BeautifulSoup(lyr_res.text, "lxml")
-        song_name = lyr_soup.select('dt[id="fsZx2"]')[0].text.strip(' ')
+        song_name = lyr_soup.select('dt[id="fsZx2"]')[0].text.strip(' ').split('(')[0].split('[')[0]
         print('Song Name:', song_name)
         lyrics_content = lyr_soup.select('dd[id="fsZx3"]')
         pattern = r"作詞：|作曲：|編曲：|監製：|主唱：|演唱：|\[|更多更詳盡歌詞"
@@ -39,10 +41,10 @@ def lyrics_crawler():
         lyrics = lyrics.strip(' ')
         # single lyrics document, id 採用歌名base64編碼
         encode_id = base64.b64encode(bytes(song_name, 'utf-8'))
-        print('id', encode_id)
-        print(lyrics)
+        print('id', str(encode_id))
+        # print(lyrics)
         # break
-        doc = {'song_name': song_name, 'lyrics': lyrics}
+        doc = {'_id':str(encode_id),'song_name': song_name, 'lyrics': lyrics}
         # save to mongoDB: DB Name = lyrics
         mon.insert_document(collection, doc)
         time.sleep(10)
